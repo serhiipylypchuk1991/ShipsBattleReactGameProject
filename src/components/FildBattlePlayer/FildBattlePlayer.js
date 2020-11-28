@@ -8,10 +8,15 @@ import Controller from '../MVC/Controller.js';//Подключаем Controller
  //Создаем компонент FildBattlePlayer который будет отображать поле игрока
  class FildBattlePlayer extends Controller{
 
+   constructor(props) {
+     super(props);
+     this.general_object = this.props.general_object;
+   }
+
    //Подключает виджет droppable
    componentDidMount() {
      this.$node = $(this.refs.droppable);
-     this.makeDroppable(this,this);
+     this.makeDroppable(this,this,this.general_object);
    }
 
     //Метод отображения информации

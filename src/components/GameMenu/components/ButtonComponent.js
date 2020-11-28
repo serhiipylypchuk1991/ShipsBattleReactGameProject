@@ -10,6 +10,7 @@ import React from 'react';//Подключаем React библиотеку
     this.i2_className = this.props.i2_className;
     this.button_name = this.props.button_name;
     //this.disabled = this.props.disabled;disabled = {this.disabled}
+    this.general_object = this.props.general_object;
 
     this.ButtonHandler = this.props.ButtonHandler;
 
@@ -21,14 +22,14 @@ import React from 'react';//Подключаем React библиотеку
         return(
           <button className = {this.button_className}
             onClick = {(e)=>{
-              this.ButtonHandler(e);
+              this.ButtonHandler(e,this.general_object);
             }}
           >
     				<span className = 'fa-stack fa-fw'>
     					<i className = {this.i1_className}></i>
     					<i className = {this.i2_className}></i>
     				</span>	{this.button_name}
-          
+
     			</button>
         );
 

@@ -14,14 +14,15 @@ class Model extends UsefulFunctions{
     this.self = this;//Ссылка на контекст собственных методов
 		this.uf = this;//Ссылка на контекст методов из класса UsefulFunctions
     this.SHIP_LOCATION_ALGORITM = Algoritm.ShipLocationAlgoritm();//Ссылка на объект Algoritm класа LocationAlgoritm, для получения алгоритма расстановки кораблей
-		this.shipBattleGeneralObj = this.getObjectFromLocalStorage();//Формирует объект со всей игровой информацией
-		this.ships_amount = 6;//Количество кораблей
+		//this.shipBattleGeneralObj = this.getObjectFromLocalStorage();//Формирует объект со всей игровой информацией
+		//this.ships_amount = 6;//Количество кораблей
 	}
 
 	//!Функция возвращает объект из хранилища если он там есть, а при его отсутствии - формирует новый объект
 	getObjectFromLocalStorage(){
 
 		if (typeof(Storage) !== "undefined" && localStorage.ShipBattleStorageInformation) {//Проверяет работоспособность хранилища и нужную инфоррмацию в нем
+			console.log('Запрос к хранилищу');
 			return JSON.parse(localStorage.ShipBattleStorageInformation)//Возвращает массив из хранилища в розкодированом виде
 		}
 		else {
@@ -37,6 +38,7 @@ class Model extends UsefulFunctions{
 				opHitsArr : [],//Массив с индексами ячеек игрока, в которые противник попал
 				answerShotArr : [],//Массив с индексами ячеек игрока, в которые противник стрелять не будет
 				my_ship_count : 0,//Количество кораблей на поле игрока
+				ships_amount:6,
 				mode_of_game : false,//Режим игры по умолчанию false
 				mode_of_play : false,//Режим плей по умолчанию
 				myShipNumbInFild : []//Массив со значениями атрибутов num кораблей, расставленых в поле игрока
@@ -91,7 +93,7 @@ class Model extends UsefulFunctions{
 
 			}
 			return integer;
-		}else if(resolt === false && general_object.opShipsLocationArr.length < this.self.ships_amount){
+		}else if(resolt === false && general_object.opShipsLocationArr.length < general_object.ships_amount){
 			return this.self.getOpponentShipPosition(general_object); //Функция повторяется пока не найдено нужное число
 		}else {console.log('Ошибка расстановки кораблей');}
 
@@ -120,7 +122,7 @@ class Model extends UsefulFunctions{
 
 	//!Функция расстановки кораблей оппонента (вызывается в Controller playButtonHandler())
 	opShipLocation(general_object){
-		for(var i = 0; i < this.self.ships_amount; i++){
+		for(var i = 0; i < general_object.ships_amount; i++){
 			this.self.getOpponentShipPosition(general_object);//Расставляет корабли по одному с учетом правил
 		}
 		this.self.saveInLocalStorage(general_object);//Сохраняет расстановку в хранилище
@@ -129,6 +131,7 @@ class Model extends UsefulFunctions{
 
 	//!Ответный выстрел противника (вызывается в Controller playerShotHandler())
 	answerShot(statisticCallback,general_object){
+
 		var index_of_answer_shot = this.self.getIndexForAnswerShot(general_object),//Получает индекс потенциального ответного выстрела
 				resolt_of_answer_shot = this.uf.findValInArr(index_of_answer_shot,general_object.myShipsLocationArr),//Проверяет наличие индекса в массиве расстановки кораблей игрока (промах или попадение)
 				my_cells = $("#FildBattlePlayer > div.cell"),//Коллекция ячеек игрока
@@ -136,7 +139,8 @@ class Model extends UsefulFunctions{
 				//resolt_of_answer_shot === true - промах противника
 				//resolt_of_answer_shot === false - попадание противника
 
-		if(resolt_of_answer_shot === true){
+		if(resolt_of_answer_shot === true){//Промах противника
+
 			general_object.opMissesArr.push(index_of_answer_shot);//Заполняет массив промахов
 			this.view.shotAnimation(my_cells.eq(index_of_answer_shot));//Анимация выстрела в ячейке противника
 			my_cells.eq(index_of_answer_shot).addClass('mishitShot');//Вешает класс промаха
@@ -145,7 +149,8 @@ class Model extends UsefulFunctions{
 				statisticCallback(general_object);//Обновляет статистику; statisticCallback - функция обновления статистики которая недоступна MyModel
 			}
 
-		} else if(resolt_of_answer_shot === false){
+		} else if(resolt_of_answer_shot === false){//Попадание противника
+
 			this.self.pushIndexInAnswerShotArr(index_of_answer_shot,general_object);//Заполняет массив потенциально заблокированными индексами ячеек
 			general_object.opHitsArr.push(index_of_answer_shot);//Заполняет массив попаданий
 			my_cells.eq(index_of_answer_shot).addClass('accurateShot');//Вешает класс попаданий
@@ -155,7 +160,8 @@ class Model extends UsefulFunctions{
 				statisticCallback(general_object);//Обновляет статистику; statisticCallback - функция обновления статистики которая недоступна Model
 			}
 
-			if(general_object.opHitsArr.length < this.self.ships_amount){
+			if(general_object.opHitsArr.length < general_object.ships_amount){
+
 				this.uf.alertMessage(2000,"Вы потеряли корабль!!!");
 				setTimeout(function(){ model_context.answerShot(statisticCallback,general_object) },2100);//Повторный выстрел при попадании по кораблю игрока
 			}else{
@@ -167,10 +173,10 @@ class Model extends UsefulFunctions{
 		this.self.saveInLocalStorage(general_object);//Cохраняет информацию в хранилище
 	}
 
-	//!Функция реагирует на точный выстрес игрока
+	//!Функция реагирует на точный выстрес игрока (вызывается в Controller playerShotHandler)
 	accurateShot(general_object){
 
-		if(general_object.myHitsArr.length < this.self.ships_amount){
+		if(general_object.myHitsArr.length < general_object.ships_amount){
 			this.uf.alertMessage(2000,"Вы подбили корабль противника!!!");//Выводит сообщение о точном попадании
 		}else{
 			this.self.progressOfGame(general_object);//Проверяет прогресс и завершает игру, блокируя ячейки оппонента от кликов функцией callback
@@ -182,7 +188,7 @@ class Model extends UsefulFunctions{
 	//!Вызывается в Controller	updateGameOnLoad и Model accurateShot
 	progressOfGame(general_object){
 
-		if(general_object.myHitsArr.length === this.self.ships_amount){
+		if(general_object.myHitsArr.length === general_object.ships_amount){
 
 			var resolt = this.self.gameResolt(general_object);
 			this.uf.alertMessage(6000,"Поздравляем, Вы ВЫИГРАЛИ!!! Ваши баллы: " + resolt);
@@ -190,7 +196,7 @@ class Model extends UsefulFunctions{
 
 		}else if(
 
-			general_object.opHitsArr.length === this.self.ships_amount){
+			general_object.opHitsArr.length === general_object.ships_amount){
 			this.uf.alertMessage(6000,"К сожалению, Вы ПРОИГРАЛИ !!! Нажмите кнопку ФИНИШ");
 			$(".finish_button").addClass('activeButton');
 

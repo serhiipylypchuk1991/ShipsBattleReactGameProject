@@ -20,6 +20,10 @@ class App extends Controller{
   constructor(props) {
     super(props);
     this.controller = this;
+
+    this.state = {
+      general_object : this.getObjectFromLocalStorage()
+    }
   }
 
   render() {
@@ -28,11 +32,21 @@ class App extends Controller{
 
       <div id = 'GameRoom'>
 
-        <FildBattlePlayer/>
-        <ShipsPort/>
-        <FildBattleRival/>
-        <GameMenu/>
-        <Statistic/>
+        <FildBattlePlayer
+          general_object = {this.state.general_object}
+        />
+        <ShipsPort
+          general_object = {this.state.general_object}
+        />
+        <FildBattleRival
+          general_object = {this.state.general_object}
+        />
+        <GameMenu
+          general_object = {this.state.general_object}
+        />
+        <Statistic
+          general_object = {this.state.general_object}
+        />
 
       </div>
 
@@ -41,7 +55,7 @@ class App extends Controller{
 
   //Запускает скрипты после рендеринга всего приложения
   componentDidMount() {
-    this.controller.updateGameOnLoad();
+    this.controller.updateGameOnLoad(this.state.general_object);
   }
 
 }

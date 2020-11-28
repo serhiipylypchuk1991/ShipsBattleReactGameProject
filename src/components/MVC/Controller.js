@@ -16,17 +16,17 @@ class Controller extends View{
 	//!Устанавливает правила для перемещения кораблей
 	makeDraggable(){
 			$('img.ship').draggable({
-			 containment : '#GameRoom',//Перемещать можно только в пределах #game_room
-			 revert : 'invalid',//Если корабль не попал на свое место, он возвращается обратно
-			 cursor : 'move',//Форма курсора
-			 snap: '#FildBattlePlayer > div.cell:empty'//Привязка корабля при передвижении к ячейкам поля
+				 containment : '#GameRoom',//Перемещать можно только в пределах #game_room
+				 revert : 'invalid',//Если корабль не попал на свое место, он возвращается обратно
+				 cursor : 'move',//Форма курсора
+				 snap: '#FildBattlePlayer > div.cell:empty'//Привязка корабля при передвижении к ячейкам поля
 		 	})
 	}
 
 	//!Устанавливает правила для розмещения кораблей в результате их перемещения
-	makeDroppable(model_context,view_context) {//Использую model_context и view_context для передачи контекста this
+	makeDroppable(model_context,view_context,general_object_from_state) {//Использую model_context и view_context для передачи контекста this
 
-			var general_object = model_context.shipBattleGeneralObj;//Ссылка на глобальный объект из модели
+			var general_object = general_object_from_state;//Ссылка на глобальный объект из состояния
 
 		 $('#FildBattlePlayer > div.cell').droppable({//Указывает куда можна ронять корабли
 				 accept:'img.ship',//Указывает какие элементы принимать
@@ -82,18 +82,18 @@ class Controller extends View{
 	}
 
 	//!Событие кнопки ИГРАТЬ
-	playButtonHandler(e){
-		var general_object = this.model.getObjectFromLocalStorage();//Вытягивает глобальный объект из хранилища (с модели приходит пустой)
+	playButtonHandler(e,general_object){
+		//console.log(general_object);
 
 		if(general_object.mode_of_game === true){//Если условие истинно, значит корабли расставлены правильно и можно изменить режим плей и начать игру
 
 			general_object.mode_of_play = true;//Меняем режим плей
 
-			this.model.saveInLocalStorage(general_object);//Сохраняем глобальный объект с информацией в хранилище
-
 			this.view.updateStyleOnChangeGameMode(general_object);//Меняет стили после нажатия кнопки ИГРАТЬ
 
 			this.model.opShipLocation(general_object);//Делает расстановку кораблей противника
+
+			this.model.saveInLocalStorage(general_object);//Сохраняем глобальный объект с информацией в хранилище
 
 		}else{//Выводит предуприждение, если корабли еще не расставлены
 			this.uf.alertMessage(2500,'Сначала расставьте все корабли на своем поле');
@@ -125,8 +125,9 @@ class Controller extends View{
 	}
 
 	//!Событие клика по ячейке противника (попадание - промах)
-	playerShotHandler(e){
-		var general_object = this.model.getObjectFromLocalStorage();//Ссылка на глобальный объект из хранилища
+	playerShotHandler(e,object_from_state){
+		//console.log(general_objects);
+		var general_object = object_from_state;
 
 		if(
 			general_object.mode_of_game === true &&
@@ -137,32 +138,34 @@ class Controller extends View{
 
 				var currently_cell = $(e.target),//Ячейка на которой сработал клик
 						index = +currently_cell.attr('val'),//Вытягивает значение атрибута val и преобразует в число (унарный +)
-						resolt = this.uf.findValInArr(index,general_object.opShipsLocationArr);
+						resolt = this.uf.findValInArr(index,general_object.opShipsLocationArr),
+						context = this.self;
 						//resolt === true - промах (функция возвращает true если индекс ячейки не совпадает с индексом росстановки кораблей в массиве)
 						//resolt === false - попадание (функция возвращает false если индекс ячейки совпадает с индексом росстановки кораблей в массиве)
 
-				if(resolt === true){//Промах игрока
+				if(resolt === true && Number.isInteger(index) && this.uf.findValInArr(index,general_object.myMissesArr)){//Промах игрока
+					console.log('Ваш промах');
 
 					general_object.myMissesArr.push(index);//Заполняет массив индексами промахов игрока
 					currently_cell.addClass('mishitShot');//Вешает клас выстрела мимо на ячейку противника
 					this.view.shotAnimation(currently_cell);//Анимация выстрела в ячейке противника
 
-					var context = this.model;
-
 					setTimeout(function(){ context.answerShot(context.updateStatisticTable,general_object);},500);
 					//this.model.answerShot(this.view.updateStatisticTable,general_object);//Ответный выстрел противника при промахе игрока  opCellsEventOff - callback + сохраняет инфу в хранилище и обновляет статистику
 
 					this.view.updateStatisticTable(general_object);//Обновляет статистику
+					console.log(general_object.myMissesArr);
 
-				}else if(resolt === false){//Попадание игрока
+				}else if(resolt === false && Number.isInteger(index) && this.uf.findValInArr(index,general_object.myHitsArr)){//Попадание игрока
+					console.log('Ваше попадание');
 
 					general_object.myHitsArr.push(index);//Заполняет массив индексами попаданий игрока
 					currently_cell.addClass('accurateShot');//Вешает клас точного выстрела
 					this.view.shotAnimation(currently_cell);//Анимация выстрела
 
 					this.view.updateStatisticTable(general_object);//Обновляет статистику
-					this.model.accurateShot(general_object);//Реагирует на точьный вестрел игрока
-
+					this.model.accurateShot(general_object);//Реагирует на точьный вестрел игрока*/
+					console.log(general_object.myHitsArr);
 				}
 
 				this.model.saveInLocalStorage(general_object);//Cохраняет информацию в хранилище
@@ -183,10 +186,10 @@ class Controller extends View{
 	}
 
 	//!Обновляет  игру при полной загрузке страницы, вызывается в App.js
-	updateGameOnLoad(){
+	updateGameOnLoad(general_object_from_state){
 
-		this.model.progressOfGame(this.model.shipBattleGeneralObj);//Проверяет прогресс игры	при загрузке
-		this.view.updateView();//Обновляет отображение игры
+		this.model.progressOfGame(general_object_from_state);//Проверяет прогресс игры	при загрузке
+		this.view.updateView(general_object_from_state);//Обновляет отображение игры
 
 	}
 

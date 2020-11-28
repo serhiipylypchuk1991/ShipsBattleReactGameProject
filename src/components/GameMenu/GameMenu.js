@@ -14,7 +14,9 @@ import ButtonComponent from './components/ButtonComponent.js';//Подключа
     this.rulsButtonHandler = this.rulsButtonHandler.bind(this);
     this.playButtonHandler = this.playButtonHandler.bind(this);
     this.finishButtonHandler = this.finishButtonHandler.bind(this);
-    
+
+    this.general_object = this.props.general_object;
+
 	}
 
 	   //Метод отображения информации
@@ -28,6 +30,7 @@ import ButtonComponent from './components/ButtonComponent.js';//Подключа
                   i1_className = {'fa fa-circle fa-stack-2x'}
                   i2_className = {'fa fa-gamepad fa-stack-1x fa-inverse'}
                   button_name = {'ИГРАТЬ'}
+                  general_object = {this.props.general_object}
                   //disabled = {'disabled'}
                   ButtonHandler = {this.playButtonHandler}
                 />

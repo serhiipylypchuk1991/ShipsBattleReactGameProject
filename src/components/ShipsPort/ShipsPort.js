@@ -9,6 +9,13 @@ import Ship from '../images/ship.png';//Подключаем изображен�
  //Создаем компонент ShipsPort который будет отображать корабли
  class ShipsPort extends Controller{
 
+   constructor(props) {
+     super(props);
+
+     this.general_object = this.props.general_object;
+
+   }
+
    //Подключает виджет draggable
    componentDidMount() {
      this.$node = $(this.refs.draggable);
@@ -23,9 +30,9 @@ import Ship from '../images/ship.png';//Подключаем изображен�
 
             {
               //Выводит на корабли в контейнер порта
-              this.model.shipsCountArray(this.model.ships_amount).map((i) => {return (
+              this.model.shipsCountArray(this.general_object.ships_amount).map((i) => {return (
                 <div key = {i}>
-                
+
                   <img  className = 'ship' num = {'' + i} src = {Ship} title = {'ship '+ (i+1)} alt = {'ship ' + (i+1)} />
 
                 </div>

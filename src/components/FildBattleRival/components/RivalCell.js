@@ -7,6 +7,7 @@ import React from 'react';//Подключаем React библиотеку
 
     this.cell_className = this.props.cell_className;
     this.cell_val = this.props.cell_val;
+    this.general_object = this.props.general_object;
 
     this.playerClickHandler = this.props.playerClickHandler;
 
@@ -22,10 +23,11 @@ import React from 'react';//Подключаем React библиотеку
               val = {this.cell_val}
 
               onClick = {(e)=>{
-                this.playerClickHandler(e);
+                this.playerClickHandler(e,this.general_object);
               }}
 
             >
+
             </div>
 
         );

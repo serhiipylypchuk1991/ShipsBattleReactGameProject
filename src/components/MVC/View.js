@@ -13,11 +13,11 @@ class View extends Model{
 	}
 
 	//!Устанавливает стили для игры при загрузке страницы (вызывается в View updateView)
-	updateModeGameStyle(){
-		var game_room = $('#GameRoom'),
-				general_object = this.model.shipBattleGeneralObj;
+	updateModeGameStyle(general_object){
+		var game_room = $('#GameRoom');
+				//general_object = this.model.shipBattleGeneralObj;
 
-		if(general_object.my_ship_count < this.model.ships_amount){
+		if(general_object.my_ship_count < general_object.ships_amount){
 
 			game_room.addClass('style1');//Устанавливаем нужный клас, пока корабли еще не расставлены и игра не начата
 
@@ -33,29 +33,29 @@ class View extends Model{
 	}
 
 	//!Возобновляет расстановку кораблей на поле игрока, при загрузке (вызывается в View updateView)
-	updateMyShipsLocation(){
+	updateMyShipsLocation(general_object){
 
 		var ships_in_port = $("#ShipsPort > div > img.ship");//Массив с кораблями в порту
 		var player_cells = $("#FildBattlePlayer > div.cell");//Массив с ячейками для поля игрока
 
-		if(this.model.shipBattleGeneralObj.myShipNumbInFild.length > 0){
-				for(var i = 0; i < this.model.shipBattleGeneralObj.myShipNumbInFild.length; i++){//Перебирает корабли от 0 до 5 (по атрибутам num)
+		if(general_object.myShipNumbInFild.length > 0){
+				for(var i = 0; i < general_object.myShipNumbInFild.length; i++){//Перебирает корабли от 0 до 5 (по атрибутам num)
 
-					var ship_num = this.model.shipBattleGeneralObj.myShipNumbInFild[i];//Получаем значение атрибута num корабля по порядку размещения
+					var ship_num = general_object.myShipNumbInFild[i];//Получаем значение атрибута num корабля по порядку размещения
 
-					if(this.model.shipBattleGeneralObj.myDisabledCellsArr[ship_num].length > 0){//Если длинна массива с заблокированными ячейками вокруг корабля (i - это num корабля) больше 0 то ...
+					if(general_object.myDisabledCellsArr[ship_num].length > 0){//Если длинна массива с заблокированными ячейками вокруг корабля (i - это num корабля) больше 0 то ...
 
-							for(var j = 0; j < this.model.shipBattleGeneralObj.myDisabledCellsArr[ship_num].length; j++){ //Проходимся цыклом по массиву с заблокированными ячейками вокруг корабля, num которого равен ship_num
+							for(var j = 0; j < general_object.myDisabledCellsArr[ship_num].length; j++){ //Проходимся цыклом по массиву с заблокированными ячейками вокруг корабля, num которого равен ship_num
 
 									if(j === 0){
 
 										var currently_ship = ships_in_port.eq(ship_num).remove();//Вырезает корабль, индекс в выборке которго совпадает с индексом соответствуещего элемента массива
-										player_cells.eq(this.model.shipBattleGeneralObj.myDisabledCellsArr[ship_num][j]).prepend(currently_ship);//ячейка принимает вырезаный корабль
+										player_cells.eq(general_object.myDisabledCellsArr[ship_num][j]).prepend(currently_ship);//ячейка принимает вырезаный корабль
 
 								} else if (
 
-										this.model.shipBattleGeneralObj.mode_of_game === false || this.model.shipBattleGeneralObj.mode_of_play === false){
-										player_cells.eq(this.model.shipBattleGeneralObj.myDisabledCellsArr[ship_num][j]).addClass("lockCell");//Закрашевает заблокированные ячейки
+										general_object.mode_of_game === false || general_object.mode_of_play === false){
+										player_cells.eq(general_object.myDisabledCellsArr[ship_num][j]).addClass("lockCell");//Закрашевает заблокированные ячейки
 
 									}
 
@@ -67,35 +67,35 @@ class View extends Model{
 	}
 
 	//!Обновляет стили  попаданий и промахов игрока на поле соперника (вызывается в View updateView)
-	updateMyShotStyle(){
+	updateMyShotStyle(general_object){
 
-		if(this.model.shipBattleGeneralObj.myHitsArr.length > 0){
-			for(var i = 0; i < this.model.shipBattleGeneralObj.myHitsArr.length; i++){
-				$("#FildBattleRival > div.cell").eq(this.model.shipBattleGeneralObj.myHitsArr[i]).addClass('accurateShot');//Обновление попаданий игрока (черный цвет ячейки)
+		if(general_object.myHitsArr.length > 0){
+			for(var i = 0; i < general_object.myHitsArr.length; i++){
+				$("#FildBattleRival > div.cell").eq(general_object.myHitsArr[i]).addClass('accurateShot');//Обновление попаданий игрока (черный цвет ячейки)
 			}
 		}
 
-		if(this.model.shipBattleGeneralObj.myMissesArr.length > 0){
-			for(var j = 0; j < this.model.shipBattleGeneralObj.myMissesArr.length; j++){
-				$("#FildBattleRival > div.cell").eq(this.model.shipBattleGeneralObj.myMissesArr[j]).addClass('mishitShot');//Обновление промахов игрока (красный цвет ячейки)
+		if(general_object.myMissesArr.length > 0){
+			for(var j = 0; j < general_object.myMissesArr.length; j++){
+				$("#FildBattleRival > div.cell").eq(general_object.myMissesArr[j]).addClass('mishitShot');//Обновление промахов игрока (красный цвет ячейки)
 			}
 		}
 
 	}
 
 	//!Обновляет стили  попаданий и промахов противника на поле игрока (вызывается в View updateView)
-	updateOpShotStyle(){
+	updateOpShotStyle(general_object){
 
-		if(this.model.shipBattleGeneralObj.opHitsArr.length > 0){
-			for(var i = 0; i < this.model.shipBattleGeneralObj.opHitsArr.length; i++){
-				$("#FildBattlePlayer > div.cell").eq(this.model.shipBattleGeneralObj.opHitsArr[i]).addClass('accurateShot');//Обновление попаданий игрока (черный цвет ячейки)
-				$("#FildBattlePlayer > div.cell").eq(this.model.shipBattleGeneralObj.opHitsArr[i]).find('img').addClass('hideElement');
+		if(general_object.opHitsArr.length > 0){
+			for(var i = 0; i < general_object.opHitsArr.length; i++){
+				$("#FildBattlePlayer > div.cell").eq(general_object.opHitsArr[i]).addClass('accurateShot');//Обновление попаданий игрока (черный цвет ячейки)
+				$("#FildBattlePlayer > div.cell").eq(general_object.opHitsArr[i]).find('img').addClass('hideElement');
 			}
 		}
 
-		if(this.model.shipBattleGeneralObj.opMissesArr.length > 0){
-			for(var j = 0; j < this.model.shipBattleGeneralObj.opMissesArr.length; j++){
-				$("#FildBattlePlayer > div.cell").eq(this.model.shipBattleGeneralObj.opMissesArr[j]).addClass('mishitShot');//Обновление промахов игрока (красный цвет ячейки)
+		if(general_object.opMissesArr.length > 0){
+			for(var j = 0; j < general_object.opMissesArr.length; j++){
+				$("#FildBattlePlayer > div.cell").eq(general_object.opMissesArr[j]).addClass('mishitShot');//Обновление промахов игрока (красный цвет ячейки)
 			}
 		}
 
@@ -116,12 +116,12 @@ class View extends Model{
 	}
 
 	//!Обновляет отображение прогреса игры (вызывается в Controller updateGameOnLoad)
-	updateView(){
-		this.self.updateModeGameStyle();//Возобновляет стили для game_room учитывая прогрес игры
-		this.self.updateMyShipsLocation();//Возобновляет расстановку кораблей на поле игрока
-		this.self.updateMyShotStyle();//Возобновляет попадания и промахи игрока на поле противника
-		this.self.updateOpShotStyle();//Возобновляет попадания и промахи противника на поле игрока
-		this.self.updateStatisticTable(this.model.shipBattleGeneralObj);//Возобновляет таблицу статистики
+	updateView(general_object){
+		this.self.updateModeGameStyle(general_object);//Возобновляет стили для game_room учитывая прогрес игры
+		this.self.updateMyShipsLocation(general_object);//Возобновляет расстановку кораблей на поле игрока
+		this.self.updateMyShotStyle(general_object);//Возобновляет попадания и промахи игрока на поле противника
+		this.self.updateOpShotStyle(general_object);//Возобновляет попадания и промахи противника на поле игрока
+		this.self.updateStatisticTable(general_object);//Возобновляет таблицу статистики
 	}
 
 	//!Меняет стили игры  (вызывается в Controller playButtonHandler() при клике на кнопку ИГРАТЬ)
@@ -147,13 +147,13 @@ class View extends Model{
 	//!Вызывается в Controller makeDraggable(), и View updateModeGameStyle() при активации кнопки Играть (подсветка зеленым цветом)
 	updatePlayButtonStyleAndMode(general_object){
 
-		if(general_object.my_ship_count === this.model.ships_amount && general_object.mode_of_game === false){
+		if(general_object.my_ship_count === general_object.ships_amount && general_object.mode_of_game === false){
 
 			//Для Controller makeDraggable() когда все корабли расставлены
 			$(".play_button").addClass('activeButton');//Вешает класс активности (зеленая подсветка), когда все корабли уже расставлены
 			general_object.mode_of_game = true; //Устанавливает режим игры true (при перезагрузке установится стиль style2)
 
-		}else if(general_object.my_ship_count === this.model.ships_amount && general_object.mode_of_game === true && general_object.mode_of_play === false){
+		}else if(general_object.my_ship_count === general_object.ships_amount && general_object.mode_of_game === true && general_object.mode_of_play === false){
 
 			//для View updateModeGameStyle() при перезагрузке
 			$(".play_button").addClass('activeButton');//Убирает атрибут с кнопки и вешает класс активности (зеленая подсветка)

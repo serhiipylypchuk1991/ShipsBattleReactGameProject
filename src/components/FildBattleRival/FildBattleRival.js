@@ -9,6 +9,8 @@ import RivalCell from './components/RivalCell.js';//Подключаем RivalCe
 	constructor(props) {
 		super(props);
     this.playerClickHandler = this.playerShotHandler.bind(this);
+
+    this.general_object = this.props.general_object;
 	}
 
 	   //Метод отображения информации
@@ -27,13 +29,14 @@ import RivalCell from './components/RivalCell.js';//Подключаем RivalCe
                       cell_val = {i}
                       key = {i}
 
+                      general_object = {this.general_object}
                       playerClickHandler = {this.playerClickHandler}
 
                     />
 
                   )})
                 }
-
+                
             </div>
         );
 
