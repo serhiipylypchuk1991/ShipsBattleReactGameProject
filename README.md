@@ -1,3 +1,60 @@
+# Nesesery! For this project you need:
+# 1) jquery: npm install jquery
+# 2) jquery-ui: npm install jquery-ui
+# 3) less:
+      npm run eject
+      npm i less less-loader
+      open webpack.config.js file located at config folder created after eject script:
+      look at the return value of exported function(that's the main config)
+
+      find where last style-loader added which is sass-loader
+
+             {
+                test: sassModuleRegex,
+                use: getStyleLoaders(
+                  {
+                    importLoaders: 3,
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
+                    modules: {
+                      getLocalIdent: getCSSModuleLocalIdent,
+                    },
+                  },
+                  'sass-loader'
+                ),
+              },
+      and add less-loader under sass-loader like this:
+
+             {
+                test: sassModuleRegex,
+                use: getStyleLoaders(
+                  {
+                    importLoaders: 3,
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
+                    modules: {
+                      getLocalIdent: getCSSModuleLocalIdent,
+                    },
+                  },
+                  'sass-loader'
+                ),
+              },
+              {
+                test: /\.less$/,
+                use: getStyleLoaders(
+                  {
+                    modules: true,
+                    importLoaders: 3,
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
+                  },
+                  'less-loader'
+                ),
+                // Don't consider CSS imports dead code even if the
+                // containing package claims to have no side effects.
+                // Remove this when webpack adds a warning or an error for this.
+                // See https://github.com/webpack/webpack/issues/6571
+                sideEffects: true,
+              },
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
