@@ -2,9 +2,9 @@
 # 1) jquery: npm install jquery
 # 2) jquery-ui: npm install jquery-ui
 # 3) less:
-      npm run eject
-      npm i less less-loader
-      open webpack.config.js file located at config folder created after eject script:
+      1) npm run eject
+      2) npm i less less-loader
+      3) open webpack.config.js file located at config folder created after eject script:
       look at the return value of exported function(that's the main config)
 
       find where last style-loader added which is sass-loader
@@ -41,7 +41,7 @@
                 test: /\.less$/,
                 use: getStyleLoaders(
                   {
-                    modules: true,
+                    modules: false,
                     importLoaders: 3,
                     sourceMap: isEnvProduction && shouldUseSourceMap,
                   },
