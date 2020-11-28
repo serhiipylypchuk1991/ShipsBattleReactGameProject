@@ -1,4 +1,4 @@
-# Nesesery! For this project you need:
+# Attention! For this project you need:
 # 1) jquery: npm install jquery
 # 2) jquery-ui: npm install jquery-ui
 # 3) less:
