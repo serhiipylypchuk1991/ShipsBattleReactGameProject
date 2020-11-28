@@ -1,5 +1,5 @@
 
-import ShutAnimation from '../images/shut2.gif';//Подключаем картинку анимации выстрела
+import ShutAnimation from '../images/shut_animation.gif';//Подключаем картинку анимации выстрела
 import $ from 'jquery';//Подключаем библиотеку jquery
 
 import Model from './Model.js';//Подключаем класс Model

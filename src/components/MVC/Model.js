@@ -22,7 +22,7 @@ class Model extends UsefulFunctions{
 	getObjectFromLocalStorage(){
 
 		if (typeof(Storage) !== "undefined" && localStorage.ShipBattleStorageInformation) {//Проверяет работоспособность хранилища и нужную инфоррмацию в нем
-			console.log('Запрос к хранилищу');
+			//console.log('Запрос к хранилищу');
 			return JSON.parse(localStorage.ShipBattleStorageInformation)//Возвращает массив из хранилища в розкодированом виде
 		}
 		else {
