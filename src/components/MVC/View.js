@@ -101,7 +101,7 @@ class View extends Model{
 
 	}
 
-	//!Обновляет таблицу статистики игры (вызывается в View updateView)
+	//!Обновляет таблицу статистики игры (вызывается в View updateView и Controller playerShotHandler)
 	updateStatisticTable(general_object){
 
 		$(".my_hits").text(general_object.myHitsArr.length);//Обновляет количество попаданий игрока
@@ -121,7 +121,7 @@ class View extends Model{
 		this.self.updateMyShipsLocation(general_object);//Возобновляет расстановку кораблей на поле игрока
 		this.self.updateMyShotStyle(general_object);//Возобновляет попадания и промахи игрока на поле противника
 		this.self.updateOpShotStyle(general_object);//Возобновляет попадания и промахи противника на поле игрока
-		this.self.updateStatisticTable(general_object);//Возобновляет таблицу статистики
+		//this.self.updateStatisticTable(general_object);//Возобновляет таблицу статистики
 	}
 
 	//!Меняет стили игры  (вызывается в Controller playButtonHandler() при клике на кнопку ИГРАТЬ)

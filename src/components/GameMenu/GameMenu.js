@@ -8,14 +8,14 @@ import ButtonComponent from './components/ButtonComponent.js';//Подключа
  class GameMenu extends Controller{
 
 	constructor(props) {
-
 		super(props);
-    this.recordsButtonHandler = this.recordsButtonHandler.bind(this);
-    this.rulsButtonHandler = this.rulsButtonHandler.bind(this);
-    this.playButtonHandler = this.playButtonHandler.bind(this);
-    this.finishButtonHandler = this.finishButtonHandler.bind(this);
 
-    this.general_object = this.props.general_object;
+    this.recordsButtonHandler = this.recordsButtonHandler.bind(this);//Обработчик события клика
+    this.rulsButtonHandler = this.rulsButtonHandler.bind(this);//Обработчик события клика
+    this.playButtonHandler = this.playButtonHandler.bind(this);//Обработчик события клика
+    this.finishButtonHandler = this.finishButtonHandler.bind(this);//Обработчик события клика
+
+    this.general_object = this.props.general_object;//Объект с игровой информацией, хранящийся в состоянии (state) App компонента
 
 	}
 
@@ -49,6 +49,8 @@ import ButtonComponent from './components/ButtonComponent.js';//Подключа
                   i2_className = {'fa fa-trophy fa-stack-1x fa-inverse'}
                   button_name = {'РЕКОРДЫ'}
                   ButtonHandler = {this.recordsButtonHandler}
+
+
                 />
 
                 <ButtonComponent

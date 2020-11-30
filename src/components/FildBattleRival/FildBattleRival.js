@@ -8,9 +8,10 @@ import RivalCell from './components/RivalCell.js';//Подключаем RivalCe
  class FildBattleRival extends Controller{
 	constructor(props) {
 		super(props);
-    this.playerClickHandler = this.playerShotHandler.bind(this);
 
-    this.general_object = this.props.general_object;
+    this.playerClickHandler = this.playerClickHandler.bind(this);//Обработчик события клика по полю соперника
+    this.general_object = this.props.general_object;//Объект с игровой информацией, хранящийся в состоянии (state) App компонента
+
 	}
 
 	   //Метод отображения информации
@@ -21,7 +22,7 @@ import RivalCell from './components/RivalCell.js';//Подключаем RivalCe
 
                 {
                   //Выводит на экран ячейки для поля игрока
-                  this.model.cellsCountArray(63).map((i) => {return (
+                  this.model.forMapIndexArray(63).map((i) => {return (
 
                     <RivalCell
 
@@ -36,7 +37,7 @@ import RivalCell from './components/RivalCell.js';//Подключаем RivalCe
 
                   )})
                 }
-                
+
             </div>
         );
 

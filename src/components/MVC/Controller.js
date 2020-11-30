@@ -115,7 +115,7 @@ class Controller extends View{
 
 	//Cобытие кнопки РЕКОРДЫ
 	recordsButtonHandler(e){
-			alert('You press record button!!!');
+			alert('Модуль находится в разработке!!!');
 	}
 
 	//!Событие кнопки КОНЕЦ ИГРЫ
@@ -125,9 +125,7 @@ class Controller extends View{
 	}
 
 	//!Событие клика по ячейке противника (попадание - промах)
-	playerShotHandler(e,object_from_state){
-		//console.log(general_objects);
-		var general_object = object_from_state;
+	playerClickHandler(e,general_object){
 
 		if(
 			general_object.mode_of_game === true &&
@@ -150,11 +148,11 @@ class Controller extends View{
 					currently_cell.addClass('mishitShot');//Вешает клас выстрела мимо на ячейку противника
 					this.view.shotAnimation(currently_cell);//Анимация выстрела в ячейке противника
 
-					setTimeout(function(){ context.answerShot(context.updateStatisticTable,general_object);},500);
+					setTimeout(function(){ context.answerShot(context.updateStatisticTable,general_object);},300);
 					//this.model.answerShot(this.view.updateStatisticTable,general_object);//Ответный выстрел противника при промахе игрока  opCellsEventOff - callback + сохраняет инфу в хранилище и обновляет статистику
 
 					this.view.updateStatisticTable(general_object);//Обновляет статистику
-					console.log(general_object.myMissesArr);
+
 
 				}else if(resolt === false && Number.isInteger(index) && this.uf.findValInArr(index,general_object.myHitsArr)){//Попадание игрока
 					console.log('Ваше попадание');
@@ -165,7 +163,7 @@ class Controller extends View{
 
 					this.view.updateStatisticTable(general_object);//Обновляет статистику
 					this.model.accurateShot(general_object);//Реагирует на точьный вестрел игрока*/
-					console.log(general_object.myHitsArr);
+
 				}
 
 				this.model.saveInLocalStorage(general_object);//Cохраняет информацию в хранилище

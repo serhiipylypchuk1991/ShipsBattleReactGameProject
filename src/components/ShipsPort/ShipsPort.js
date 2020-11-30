@@ -12,7 +12,7 @@ import Ship from '../images/ship.png';//Подключаем изображен�
    constructor(props) {
      super(props);
 
-     this.general_object = this.props.general_object;
+     this.general_object = this.props.general_object;//Объект с игровой информацией, хранящийся в состоянии (state) App компонента
 
    }
 
@@ -30,7 +30,7 @@ import Ship from '../images/ship.png';//Подключаем изображен�
 
             {
               //Выводит на корабли в контейнер порта
-              this.model.shipsCountArray(this.general_object.ships_amount).map((i) => {return (
+              this.model.forMapIndexArray(this.general_object.ships_amount).map((i) => {return (
                 <div key = {i}>
 
                   <img  className = 'ship' num = {'' + i} src = {Ship} title = {'ship '+ (i+1)} alt = {'ship ' + (i+1)} />

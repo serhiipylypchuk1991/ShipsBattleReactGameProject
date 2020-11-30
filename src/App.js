@@ -24,6 +24,7 @@ class App extends Controller{
     this.state = {
       general_object : this.getObjectFromLocalStorage()
     }
+
   }
 
   render() {

@@ -3,16 +3,17 @@ import React from 'react';//Подключаем React библиотеку
  //Создаем компонент ButtonComponent который будет отображать кнопки в меню
  class ButtonComponent extends React.Component{
 	constructor(props) {
-		super(props);
 
+		super(props);
+    this.self = this;
     this.button_className = this.props.button_className;
     this.i1_className = this.props.i1_className;
     this.i2_className = this.props.i2_className;
     this.button_name = this.props.button_name;
     //this.disabled = this.props.disabled;disabled = {this.disabled}
-    this.general_object = this.props.general_object;
+    this.general_object = this.props.general_object;//Объект с игровой информацией, хранящийся в состоянии (state) App компонента
 
-    this.ButtonHandler = this.props.ButtonHandler;
+    this.ButtonHandler = this.props.ButtonHandler.bind(this);//Обработчик события клика
 
 	}
 

@@ -7,9 +7,9 @@ import React from 'react';//Подключаем React библиотеку
 
     this.cell_className = this.props.cell_className;
     this.cell_val = this.props.cell_val;
-    this.general_object = this.props.general_object;
+    this.general_object = this.props.general_object;//Объект с игровой информацией, хранящийся в состоянии (state) App компонента
 
-    this.playerClickHandler = this.props.playerClickHandler;
+    this.playerClickHandler = this.props.playerClickHandler;//Обработчик события клика
 
 	}
 

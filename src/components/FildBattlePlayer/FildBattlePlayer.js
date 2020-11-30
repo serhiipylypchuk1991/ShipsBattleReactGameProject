@@ -10,7 +10,9 @@ import Controller from '../MVC/Controller.js';//Подключаем Controller
 
    constructor(props) {
      super(props);
-     this.general_object = this.props.general_object;
+
+     this.general_object = this.props.general_object;//Объект с игровой информацией, хранящийся в состоянии (state) App компонента
+
    }
 
    //Подключает виджет droppable
@@ -27,7 +29,7 @@ import Controller from '../MVC/Controller.js';//Подключаем Controller
 
               {
                 //Выводит на экран ячейки для поля игрока
-                this.model.cellsCountArray(63).map((i) => {return (<div className = 'cell' val = {i} key = {i}></div>)})
+                this.model.forMapIndexArray(63).map((i) => {return (<div className = 'cell' val = {i} key = {i}></div>)})
               }
 
           </div>
