@@ -1,7 +1,8 @@
 # Attention! For this project you need:
 # 1) jquery: npm install jquery
 # 2) jquery-ui: npm install jquery-ui
-# 3) less:
+# 3) jquery-ui-touch-punch: npm install jquery-ui-touch-punch
+# 4) less:
       1) npm run eject
       2) npm i less less-loader
       3) open webpack.config.js file located at config folder created after eject script:
