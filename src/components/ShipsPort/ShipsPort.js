@@ -2,7 +2,7 @@ import React from 'react';//Подключаем React библиотеку
 
 import $ from 'jquery';//Подключаем библиотеку jquery
 import 'jquery-ui/ui/widgets/draggable.js';//Подключаем виджет jquery-ui
-import 'jquery-ui-touch-punch';
+import 'jquery-ui-touch-punch';//Подключаем событие тач для мобильных устройств
 
 import Controller from '../MVC/Controller.js';//Подключаем Controller
 

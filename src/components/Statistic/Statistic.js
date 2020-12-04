@@ -22,18 +22,18 @@ class Statistic extends Controller{
                 <p className = "my_resolt">
 
                   <i className = "fa fa-user fa-lg" ></i>
-                  <span>попадания:</span>	<span className = 'my_hits'>{this.general_object.myHitsArr.length}</span>
-                  <span>промахи:</span>	<span className = 'my_misses'>{this.general_object.myMissesArr.length}</span>
-                  <span>потери:</span>	<span className = 'my_losses'>{this.general_object.opHitsArr.length}</span>
+                  <span>Попадания:</span>	<span className = 'my_hits'>{this.general_object.myHitsArr.length}</span>
+                  <span>Промахи:</span>	<span className = 'my_misses'>{this.general_object.myMissesArr.length}</span>
+                  <span>Потери:</span>	<span className = 'my_losses'>{this.general_object.opHitsArr.length}</span>
 
                 </p>
 
                 <p className = "op_resolt">
 
                   <i className = "fa fa-android fa-lg" ></i>
-                  <span>попадания:</span>	<span className = 'op_hits'>{this.general_object.opHitsArr.length}</span>
-                  <span>промахи:</span>	<span className = 'op_misses'>{this.general_object.opMissesArr.length}</span>
-                  <span>потери:</span>	<span className = 'op_losses'>{this.general_object.myHitsArr.length}</span>
+                  <span>Попадания:</span>	<span className = 'op_hits'>{this.general_object.opHitsArr.length}</span>
+                  <span>Промахи:</span>	<span className = 'op_misses'>{this.general_object.opMissesArr.length}</span>
+                  <span>Потери:</span>	<span className = 'op_losses'>{this.general_object.myHitsArr.length}</span>
 
                 </p>
 

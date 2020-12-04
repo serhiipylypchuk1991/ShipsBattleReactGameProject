@@ -1,5 +1,8 @@
 
-import $ from 'jquery';//Подключаем React библиотеку
+
+import $ from 'jquery';//Подключаем библиотеку jquery
+import 'jquery-ui/ui/widgets/draggable.js';//Подключаем виджет jquery-ui
+import 'jquery-ui-touch-punch';//Подключаем событие тач для мобильных устройств
 
 import View from './View.js';////Подключаем класс View
 
@@ -184,7 +187,7 @@ class Controller extends View{
 
 		}else {
 
-			this.uf.alertMessage(2500,"Расставте корабли и нажмите кнопку 'ИГРАТЬ'");
+			this.uf.alertMessage(2500,"Расставьте корабли и нажмите кнопку ИГРАТЬ");
 
 		}
 
