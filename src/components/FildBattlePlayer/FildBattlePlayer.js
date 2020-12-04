@@ -1,7 +1,7 @@
 import React from 'react';//Подключаем React библиотеку
 
 import $ from 'jquery';//Подключаем jquery библиотеку
-import 'jquery-ui/ui/widgets/droppable.js';
+import 'jquery-ui/ui/widgets/droppable.js';//Подключаем виджет jquery-ui
 
 import Controller from '../MVC/Controller.js';//Подключаем Controller
 
@@ -16,19 +16,20 @@ import Controller from '../MVC/Controller.js';//Подключаем Controller
    }
 
    //Подключает виджет droppable
-   componentDidMount() {
+   componentDidMount(){
+
      this.$node = $(this.refs.droppable);
      this.makeDroppable(this,this,this.general_object);
+
    }
 
     //Метод отображения информации
     render(){
 
-      return(//Отображает компонент
+      return(
           <div id = 'FildBattlePlayer'>
 
-              {
-                //Выводит на экран ячейки для поля игрока
+              {//Выводит на экран ячейки для поля игрока
                 this.model.forMapIndexArray(63).map((i) => {return (<div className = 'cell' val = {i} key = {i}></div>)})
               }
 
@@ -38,8 +39,10 @@ import Controller from '../MVC/Controller.js';//Подключаем Controller
     }
 
     //Отключает виджет droppable
-    componentWillUnmount() {
+    componentWillUnmount(){
+
         this.$node.droppable('destroy');
+
     }
 
 }

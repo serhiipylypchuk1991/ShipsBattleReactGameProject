@@ -1,8 +1,10 @@
+
 import React from 'react';//Подключаем React библиотеку
 
- //Создаем компонент RivalCell который будет отображать ячейки противника
- class RivalCell extends React.Component{
-	constructor(props) {
+//Создаем компонент RivalCell который будет отображать ячейки противника
+class RivalCell extends React.Component{
+
+	 constructor(props) {
 		super(props);
 
     this.cell_className = this.props.cell_className;
@@ -13,8 +15,8 @@ import React from 'react';//Подключаем React библиотеку
 
 	}
 
-	   //Метод отображения информации
-     render(){
+   //Метод отображения информации
+   render(){
 
         return(
 

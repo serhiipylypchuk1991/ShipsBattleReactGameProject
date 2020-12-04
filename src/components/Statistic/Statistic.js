@@ -1,19 +1,20 @@
+
 import React from 'react';//Подключаем React библиотеку
 
 import Controller from '../MVC/Controller.js';//Подключаем Controller
 
+//Создаем компонент Statistic который будет отображать статистику игры
+class Statistic extends Controller{
 
-
- //Создаем компонент Statistic который будет отображать статистику игры
- class Statistic extends Controller{
    constructor(props) {
      super(props);
 
      this.general_object = this.props.general_object;//Объект с игровой информацией, хранящийся в состоянии (state) App компонента
 
    }
-	   //Метод отображения информации
-     render(){
+
+	 //Метод отображения информации
+   render(){
 
         return(
             <div className = 'statistic'>

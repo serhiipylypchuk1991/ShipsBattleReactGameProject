@@ -1,6 +1,8 @@
 import React from 'react';//Подключаем React библиотеку
 
 import $ from 'jquery';//Подключаем библиотеку jquery
+import 'jquery-ui/ui/widgets/draggable.js';//Подключаем виджет jquery-ui
+import 'jquery-ui-touch-punch';
 
 import Controller from '../MVC/Controller.js';//Подключаем Controller
 
@@ -18,18 +20,20 @@ import Ship from '../images/ship.png';//Подключаем изображен�
 
    //Подключает виджет draggable
    componentDidMount() {
+
      this.$node = $(this.refs.draggable);
      this.makeDraggable(this.$node);
+
    }
 
    //Метод отображения информации
    render(){
+
       return(
 
         <div id = 'ShipsPort'>
 
-            {
-              //Выводит на корабли в контейнер порта
+            {//Выводит на корабли в контейнер порта
               this.model.forMapIndexArray(this.general_object.ships_amount).map((i) => {return (
                 <div key = {i}>
 
@@ -42,11 +46,14 @@ import Ship from '../images/ship.png';//Подключаем изображен�
         </div>
 
       );
+
     }
 
-    //Отключает виджет draggable
-    componentWillUnmount() {
+   //Отключает виджет draggable
+   componentWillUnmount() {
+
       this.$node.draggable("destroy");
+
     }
 
 }

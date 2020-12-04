@@ -8,14 +8,16 @@ class View extends Model{
 
 	constructor(props) {
     super(props);
+
     this.self = this;
 		this.model = this;
+
 	}
 
 	//!Устанавливает стили для игры при загрузке страницы (вызывается в View updateView)
 	updateModeGameStyle(general_object){
+
 		var game_room = $('#GameRoom');
-				//general_object = this.model.shipBattleGeneralObj;
 
 		if(general_object.my_ship_count < general_object.ships_amount){
 
@@ -27,9 +29,12 @@ class View extends Model{
 			this.self.updatePlayButtonStyleAndMode(general_object);//Подсвечиваем кнопку ИГРАТЬ зеленым цветом
 
 		} else{//Все условия соблюдены и игра уже началась
+
 			game_room.addClass('style2');//Устанавливаем нужный клас после перезагрузки, если игра уже началось
 			$(".play_button").removeClass("activeButton").attr('disabled','disabled');//Блокируем кнопку Играть при перезагрузке, если игра уже началось
+
 		}
+
 	}
 
 	//!Возобновляет расстановку кораблей на поле игрока, при загрузке (вызывается в View updateView)
@@ -39,6 +44,7 @@ class View extends Model{
 		var player_cells = $("#FildBattlePlayer > div.cell");//Массив с ячейками для поля игрока
 
 		if(general_object.myShipNumbInFild.length > 0){
+
 				for(var i = 0; i < general_object.myShipNumbInFild.length; i++){//Перебирает корабли от 0 до 5 (по атрибутам num)
 
 					var ship_num = general_object.myShipNumbInFild[i];//Получаем значение атрибута num корабля по порядку размещения
@@ -70,15 +76,19 @@ class View extends Model{
 	updateMyShotStyle(general_object){
 
 		if(general_object.myHitsArr.length > 0){
+
 			for(var i = 0; i < general_object.myHitsArr.length; i++){
 				$("#FildBattleRival > div.cell").eq(general_object.myHitsArr[i]).addClass('accurateShot');//Обновление попаданий игрока (черный цвет ячейки)
 			}
+
 		}
 
 		if(general_object.myMissesArr.length > 0){
+
 			for(var j = 0; j < general_object.myMissesArr.length; j++){
 				$("#FildBattleRival > div.cell").eq(general_object.myMissesArr[j]).addClass('mishitShot');//Обновление промахов игрока (красный цвет ячейки)
 			}
+
 		}
 
 	}
@@ -87,16 +97,20 @@ class View extends Model{
 	updateOpShotStyle(general_object){
 
 		if(general_object.opHitsArr.length > 0){
+
 			for(var i = 0; i < general_object.opHitsArr.length; i++){
 				$("#FildBattlePlayer > div.cell").eq(general_object.opHitsArr[i]).addClass('accurateShot');//Обновление попаданий игрока (черный цвет ячейки)
 				$("#FildBattlePlayer > div.cell").eq(general_object.opHitsArr[i]).find('img').addClass('hideElement');
 			}
+
 		}
 
 		if(general_object.opMissesArr.length > 0){
+
 			for(var j = 0; j < general_object.opMissesArr.length; j++){
 				$("#FildBattlePlayer > div.cell").eq(general_object.opMissesArr[j]).addClass('mishitShot');//Обновление промахов игрока (красный цвет ячейки)
 			}
+
 		}
 
 	}
@@ -117,11 +131,13 @@ class View extends Model{
 
 	//!Обновляет отображение прогреса игры (вызывается в Controller updateGameOnLoad)
 	updateView(general_object){
+
 		this.self.updateModeGameStyle(general_object);//Возобновляет стили для game_room учитывая прогрес игры
 		this.self.updateMyShipsLocation(general_object);//Возобновляет расстановку кораблей на поле игрока
 		this.self.updateMyShotStyle(general_object);//Возобновляет попадания и промахи игрока на поле противника
 		this.self.updateOpShotStyle(general_object);//Возобновляет попадания и промахи противника на поле игрока
-		//this.self.updateStatisticTable(general_object);//Возобновляет таблицу статистики
+		//this.self.updateStatisticTable(general_object);//Возобновляет таблицу статистики - по факту оказалась излишней здесь
+
 	}
 
 	//!Меняет стили игры  (вызывается в Controller playButtonHandler() при клике на кнопку ИГРАТЬ)
@@ -131,14 +147,18 @@ class View extends Model{
 
 		//Если игра начата, убираем ненужные классы подсветки поля игрока
 		if(general_object.mode_of_game === true && general_object.mode_of_play === true){
+
 			for(var i = 0; i <= 63; i++){
 				player_cells.eq(i).removeClass('lockCell hoverCell');
-
 			}
+
 			$('#GameRoom').fadeOut( 500,function(){
+
 				$(this).removeClass().addClass('style2').fadeIn( 500 );//Устанавливает нужный класс и делает плавную анимацию между стилями
 				$(".play_button").removeClass("activeButton").attr('disabled','disabled');//Блокирует кнопку ИГРАТЬ
+
 			});
+
 		}
 
 	}
@@ -164,10 +184,12 @@ class View extends Model{
 
 	//!Воспроизводит анимацию выстрела (вызывается в Controller)
 	shotAnimation(currently_element){
+
 			currently_element.html('<img src = '+ ShutAnimation +'>');//Вставляет анимацию выстрела
 			currently_element.find('img').fadeOut(3000,function(){//Скрывает анимацию выстрела
 				$(this).remove();//Вырезает анимацию
 			})
+			
 	}
 
 }

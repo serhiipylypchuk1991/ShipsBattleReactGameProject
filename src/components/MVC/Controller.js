@@ -7,20 +7,24 @@ class Controller extends View{
 
 	constructor(props) {
     super(props);
+
     this.self = this;
 		this.model = this;
 		this.view = this;
 		this.uf = this;
+
 	}
 
 	//!Устанавливает правила для перемещения кораблей
 	makeDraggable(){
+
 			$('img.ship').draggable({
 				 containment : '#GameRoom',//Перемещать можно только в пределах #game_room
 				 revert : 'invalid',//Если корабль не попал на свое место, он возвращается обратно
 				 cursor : 'move',//Форма курсора
 				 snap: '#FildBattlePlayer > div.cell:empty'//Привязка корабля при передвижении к ячейкам поля
 		 	})
+
 	}
 
 	//!Устанавливает правила для розмещения кораблей в результате их перемещения
@@ -95,18 +99,20 @@ class Controller extends View{
 			this.model.saveInLocalStorage(general_object);//Сохраняем глобальный объект с информацией в хранилище
 
 		}else{//Выводит предуприждение, если корабли еще не расставлены
+
 			this.uf.alertMessage(2000,'Сначала расставьте все корабли на своем поле');
+
 		}
 	}
 
 	//!Событие кнопки ПРАВИЛА
 	rulsButtonHandler(e){
 
-		var mes_of_ruls1 = "Расставьте корабли и нажмите кнопку 'ИГРАТЬ'",
+		var mes_of_ruls1 = "Расставьте корабли и нажмите кнопку ИГРАТЬ",
 				mes_of_ruls2 = "Когда попадете по кораблю противника - стреляйте еще раз, если мимо - стреляет противник",
 				mes_of_ruls3 = "Когда соперник подбивает Вас - он стреляет повторно",
 				mes_of_ruls4 = "Если Вы побеждаете - на экран выводится сообщение о ваших баллах",
-				mes_of_ruls5 = "В любой момент можно закончить игру нажав кнопку 'ФИНИШ'",
+				mes_of_ruls5 = "В любой момент можно закончить игру нажав кнопку ФИНИШ",
 				mes_of_ruls6 = 'Учитывайте, что корабли противника не могут стоять в соседних ячейках';
 
 		this.uf.closeMessage(mes_of_ruls1, mes_of_ruls2, mes_of_ruls6, mes_of_ruls3, mes_of_ruls4, mes_of_ruls5);
@@ -120,8 +126,10 @@ class Controller extends View{
 
 	//!Событие кнопки КОНЕЦ ИГРЫ
 	finishButtonHandler(e){
+
 		localStorage.removeItem("ShipBattleStorageInformation");//Удаляет информацию из хранилища
 		window.location.reload();//Перезагружает страницу
+
 	}
 
 	//!Событие клика по ячейке противника (попадание - промах)
@@ -142,8 +150,8 @@ class Controller extends View{
 						//resolt === false - попадание (функция возвращает false если индекс ячейки совпадает с индексом росстановки кораблей в массиве)
 
 				if(resolt === true && Number.isInteger(index) && this.uf.findValInArr(index,general_object.myMissesArr)){//Промах игрока
-					console.log('Ваш промах');
 
+					//console.log('Ваш промах');
 					general_object.myMissesArr.push(index);//Заполняет массив индексами промахов игрока
 					currently_cell.addClass('mishitShot');//Вешает клас выстрела мимо на ячейку противника
 					this.view.shotAnimation(currently_cell);//Анимация выстрела в ячейке противника
@@ -153,10 +161,9 @@ class Controller extends View{
 
 					this.view.updateStatisticTable(general_object);//Обновляет статистику
 
-
 				}else if(resolt === false && Number.isInteger(index) && this.uf.findValInArr(index,general_object.myHitsArr)){//Попадание игрока
-					console.log('Ваше попадание');
 
+					//console.log('Ваше попадание');
 					general_object.myHitsArr.push(index);//Заполняет массив индексами попаданий игрока
 					currently_cell.addClass('accurateShot');//Вешает клас точного выстрела
 					this.view.shotAnimation(currently_cell);//Анимация выстрела

@@ -19,10 +19,12 @@ import Controller from './components/MVC/Controller.js';//Подключаем C
 class App extends Controller{
   constructor(props) {
     super(props);
+
     this.controller = this;
+    this.model = this;
 
     this.state = {
-      general_object : this.getObjectFromLocalStorage()
+      general_object : this.model.getObjectFromLocalStorage()
     }
 
   }
@@ -60,5 +62,6 @@ class App extends Controller{
   }
 
 }
+
 //export default - дает возможность использовать компонент App в других файлах
 export default App;

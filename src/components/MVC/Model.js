@@ -4,7 +4,7 @@ import $ from 'jquery';//Подключаем библиотеку jquery
 import UsefulFunctions from './UsefulFunctions/UsefulFunctions.js';//Подключаем скрипт с алгоритмом расстановки кораблей
 
 import LocationAlgoritm from './Algoritm/LocationAlgoritm.js';//Подключаем скрипт с алгоритмом расстановки кораблей
-const Algoritm  = new LocationAlgoritm();//Cоздаем объект класа, для доступа к алгоритму
+const Algoritm  = new LocationAlgoritm();//Cоздаем объект класа, для доступа к алгоритму расстановки кораблей игрока и противника
 
 class Model extends UsefulFunctions{
 	constructor(props) {
@@ -17,6 +17,7 @@ class Model extends UsefulFunctions{
 	}
 
 	//!Функция возвращает объект из хранилища если он там есть, а при его отсутствии - формирует новый объект
+	//Вызывается в конструкторе компонента App, и формирует объект состояния этого компонента
 	getObjectFromLocalStorage(){
 
 		if (typeof(Storage) !== "undefined" && localStorage.ShipBattleStorageInformation) {//Проверяет работоспособность хранилища и нужную инфоррмацию в нем
@@ -46,7 +47,7 @@ class Model extends UsefulFunctions{
 	}
 
 	//!Возвращает массив с индексами, для формирования ячеек игрока и противника, а также корабли в порту(for Controller)
-	//!Массив перебирается функцией map() - единствинным цыклом, доступным в жизненном цыкле render()
+	//!Массив перебирается функцией map() - единствинным цыклом, доступным в жизненном цыкле render() компонента
 	forMapIndexArray(count){//count - количество индексов
 		 var indexArray = [];//Обявляем массив
 		 if(count > 7){//Для ячеек игрока и противника
@@ -60,15 +61,6 @@ class Model extends UsefulFunctions{
 		 }
 		 return indexArray;//Возвращаем массив с указаным в аргументе количеством индексов
 	}
-
-	//!Возвращает массив с индексами для кораблей (for Controller)
-	/*shipsCountArray(count){//count - количество ячеек коля
-		var countArray = [];//Объявляем массив
-		for(var i = 0; i < count; i++){//Заполняем его
-			countArray.push(i)
-		}
-		return countArray;//Возвращаем массив с нужным количеством элементов для перебора через map()
-	}*/
 
 	//!Производит подсчет баллов в конце игры (вызывается в progressOfGame)
 	gameResolt(general_object){
@@ -187,6 +179,7 @@ class Model extends UsefulFunctions{
 			this.self.progressOfGame(general_object);//Проверяет прогресс и завершает игру, блокируя ячейки оппонента от кликов функцией callback
 		}
 		this.self.saveInLocalStorage(general_object);//Сохраняет объект в хранилище (не избыточно)
+
 	}
 
 	//!Проверяет прогресс игры, выводит сообщение о выиграше или проиграше
@@ -196,13 +189,13 @@ class Model extends UsefulFunctions{
 		if(general_object.myHitsArr.length === general_object.ships_amount){
 
 			var resolt = this.self.gameResolt(general_object);
-			this.uf.alertMessage(6000,"Поздравляем, Вы ВЫИГРАЛИ!!! Ваши баллы: " + resolt);
+			this.uf.alertMessage(5000,"Поздравляем, Вы ВЫИГРАЛИ!!! Ваши баллы: " + resolt);
 			$(".finish_button").addClass('activeButton');
 
 		}else if(
 
 			general_object.opHitsArr.length === general_object.ships_amount){
-			this.uf.alertMessage(6000,"К сожалению, Вы ПРОИГРАЛИ !!! Нажмите кнопку ФИНИШ");
+			this.uf.alertMessage(6000,"К сожалению, Вы ПРОИГРАЛИ. Нажмите кнопку ФИНИШ");
 			$(".finish_button").addClass('activeButton');
 
 		}
@@ -213,7 +206,6 @@ class Model extends UsefulFunctions{
 	saveInLocalStorage(object){
 		localStorage.ShipBattleStorageInformation = JSON.stringify(object);//Переводит массив ShipBattleStorageInformation в формат JSON и сохраняет в localStorage
 	}
-
 
 }
 //export default - дает возможность использовать компонент Model в других файлах

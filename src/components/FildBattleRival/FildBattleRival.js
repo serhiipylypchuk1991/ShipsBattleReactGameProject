@@ -1,12 +1,14 @@
+
 import React from 'react';//Подключаем React библиотеку
 
 import Controller from '../MVC/Controller.js';//Подключаем Controller
 
 import RivalCell from './components/RivalCell.js';//Подключаем RivalCell компонент
 
- //Создаем компонент FildBattleRival который будет отображать поле оппонента
- class FildBattleRival extends Controller{
-	constructor(props) {
+//Создаем компонент FildBattleRival который будет отображать поле оппонента
+class FildBattleRival extends Controller{
+
+	 constructor(props) {
 		super(props);
 
     this.playerClickHandler = this.playerClickHandler.bind(this);//Обработчик события клика по полю соперника
@@ -14,8 +16,8 @@ import RivalCell from './components/RivalCell.js';//Подключаем RivalCe
 
 	}
 
-	   //Метод отображения информации
-     render(){
+   //Метод отображения информации
+   render(){
 
         return(
             <div id = 'FildBattleRival'>
